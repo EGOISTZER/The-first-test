@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static  'polls/style.css' %}">
+</head>
+<body>
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+
+            <li>
+                <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+
+<!--                接收polls命名空间中url name为detail的路径，用question.id来填充<int:question.id>-->
+
+<!--                <a href="/polls/{{question.id}}">{{question.question_text}}</a>-->
+<!--                变量用双层花括号-->
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+</body>
+</html>

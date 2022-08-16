@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票页面</title>
+</head>
+<body>
+<!--from action=x表示表单数据向那个路径(x)传输  method后一般使用post-->
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+<!--   csrf_token为Django自带防御机制, 所有内部URL的post表单都需要填写该语句   -->
+        {% csrf_token %}
+        <fieldset>
+<!--        fieldset会在相关表单元素周围绘制边框-->
+            <legend><h1>{{ question.question_text }}</h1></legend>
+<!--            legend为fieldset创建标题-->
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+            {% for choice in question.choice_set.all %}
+
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+<!--            forloop.couter表示循环了多少次-->
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+<!--            label for后接input的id用于绑定input元素-->
+            <br>
+<!--            br 仅开始新一行，不会像p一样还帮你设置行距-->
+<!--            br 是空标签，故无结束标签，在XMTL中用<br/>-->
+            {% endfor %}
+        </fieldset>
+    <input type="submit" value="Vote">
+
+
+    </form>
+
+
+<!--    <hl>{{ question.question_id }}</hl>-->
+<!--    <ul>-->
+<!--        {% for choice in question.choice_set.all %}-->
+<!--        <li>{{ choice.choice_text }}</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+</body>
+</html>

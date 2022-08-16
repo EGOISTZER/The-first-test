@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+        <h1>{{ question.question_text }}</h1>
+    <ul>
+        {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }}--{{ choice.votes }}vote{{ choice.votes|pluralize }}</li>
+<!--        |pluralize是Django内置过滤器，对复数票进行+s，单数票不处理-->
+        {% endfor %}
+    </ul>
+        <a href="{% url 'polls:detail' question.id %}"> Vote again？</a>
+</body>
+</html>
